@@ -1,0 +1,52 @@
+[Main]
+Title=SafeGuard Enterprise Utilities
+Type=script
+Selected=True
+Level=5
+Author=Raetha
+Credits=http://www.sophos.com/products/enterprise/encryption/safeguard-enterprise/
+NoWarning=False
+Description=(Tested with v5.35.3) Utitilities required to interact with a SafeGuard Enterprise encrypted volume.#$X#$XScript does not include program files due to potential licensing conflicts.
+Download_Level=2
+Version=2
+Date=15 Apr 2010
+
+[Variables]
+%ProgramFolder%=SafeGuard Utilities
+%ProgramEXE%=RecoverKeys.exe
+%ProgramTitle%=RecoverKeys
+%ProgramEXE2%=BE_Restore.exe
+%ProgramTitle2%=BE Restore
+
+[Process]
+Echo,"Processing SafeGuard Utilities..."
+RunFromRam,%pCheckBox1%
+DirCopy,"%ScriptDir%\%ProgramFolder%\*.*","%target_prog%\%ProgramFolder%"
+Echo,"Processing %ProgramTitle%..."
+If,%pCheckBox2%,Equal,True,Add_Shortcut,Desktop
+If,%pCheckBox3%,Equal,True,Add_Shortcut,QuickLaunch
+If,%pCheckBox4%,Equal,True,Add_Shortcut,StartMenu,%pTextBox1%
+Set,%ProgramEXE%,%ProgramEXE2%
+Set,%ProgramTitle%,%ProgramTitle2%
+Echo,"Processing %ProgramTitle%..."
+If,%pCheckBox2%,Equal,True,Add_Shortcut,Desktop
+If,%pCheckBox3%,Equal,True,Add_Shortcut,QuickLaunch
+If,%pCheckBox4%,Equal,True,Add_Shortcut,StartMenu,%pTextBox1%
+
+[Interface]
+pCheckBox1="Run from RAM (boot.wim or RAMdisk)",1,3,10,11,200,18,False
+pCheckBox2="Add Desktop shortcut(s)",1,3,11,41,200,18,True
+pCheckBox3="Add Quick Launch shortcut(s)",1,3,11,64,200,18,False
+pCheckBox4="Add Start Menu shortcut(s)",1,3,11,87,200,18,True
+pTextBox1="Start Menu folder:",1,0,11,126,200,18,
+pBevel1=pBevel1,1,12,6,36,210,115
+pWebLabel1="SafeGuard Enterprise Website",1,10,221,11,200,18,http://www.sophos.com/products/enterprise/encryption/safeguard-enterprise/
+pTextFile1=SafeGuard_Utilities_Setup.txt,1,6,221,36,325,270
+
+[InterfaceEncoded]
+SafeGuard_Utilities_Setup.txt=444,592
+
+[EncodedFile-InterfaceEncoded-SafeGuard_Utilities_Setup.txt]
+lines=0
+0=eJx1ksFOwzAMhs+r1HewduFWdRISE8eOMU3bEOoGVxRSl1mkcZW4G3t70hTEQOMSxfrs35Z/7xg6jyB78uC1o1bgxB00nRdoue2MEgQF462qcdEpV8GTkCEh9GOo2VTo0uRIod6ei1z5Lwg9CwT72PCR7BvUZDBwx00EqmrIpokwGw+t4wNVWA11Cn76zq2gax2Facl6USaMRmxv0yRNivnLqijv1mubX+cqq4wZNbWe5l3//YP1N26m+QWMZ/hS+U3kG9KOPdeSPc+CzKzcZY2yVKOX3/mT/FL+5n72X/5k6O8Pl+aLLML2DJZBhR1m+IEDdN9w5ax5VCLZK9nRqETNB3QrPPk+N03ijgbN0XZRzDdFmRXLh36jSxt8oX7B8R6OZAxYDL4Ig+b2FJ1zg+BJ+B1tFt5oLWiH4WqqcBd7tEPU267gQE46ZUAbQisQTwbPLNZsPRvMPgEGndpgeJyTDU5MS3UvTSxKiQ8tyczJLMlMLY4PTi0pLdArqShhGAXDHExlgtDxjNjlC+ZkLWRgAgCJMQ65L+wT4AEAAAACAAAAOQAAAF8BAAAAAAAAAQAAAAAAAAAAAAAA
+

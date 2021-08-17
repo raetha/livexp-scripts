@@ -1,0 +1,54 @@
+[Main]
+Title=Spybot Search & Destroy
+Type=script
+Selected=True
+Level=5
+Author=Raetha
+Credits=http://www.safer-networking.org/
+Description=(Tested with v1.6.2.46) Spybot Search & Destroy - Popular freeware anti-malware utility.#$X#$XScript does not include program files to allow for definition updates at build time.
+Download_Level=2
+Version=2
+NoWarning=False
+Date=15 Apr 2010
+
+[Variables]
+%ProgramFolder%=SpyBot
+%ProgramEXE%=SpyBotSD.exe
+%ProgramTitle%=SpyBot
+
+[Process]
+Echo,"Processing %ProgramTitle%..."
+RunFromRam,%pCheckBox1%
+If,%pCheckBox5%,Equal,True,Run,%ScriptFile%,AutoUpdate
+FileDelete,%ScriptDir%\%ProgramFolder%\Updates\*.zip
+FileDelete,%ScriptDir%\%ProgramFolder%\Updates\*.exe
+DirCopy,"%ScriptDir%\%ProgramFolder%\*.*","%target_prog%\%ProgramFolder%"
+If,%pCheckBox2%,Equal,True,Add_Shortcut,Desktop
+If,%pCheckBox3%,Equal,True,Add_Shortcut,QuickLaunch
+If,%pCheckBox4%,Equal,True,Add_Shortcut,StartMenu,%pTextBox1%
+
+[Interface]
+pCheckBox1="Run from RAM (boot.wim or RAMdisk)",1,3,10,11,200,18,False
+pCheckBox2="Add Desktop shortcut(s)",1,3,11,41,200,18,True
+pCheckBox3="Add Quick Launch shortcut(s)",1,3,11,64,200,18,False
+pCheckBox4="Add Start Menu shortcut(s)",1,3,11,87,200,18,True
+pTextBox1="Start Menu folder:",1,0,11,126,200,18,
+pBevel1=pBevel1,1,12,6,36,210,115
+pCheckBox5="Silent update at build time.",1,3,11,160,200,18,True
+pButton1="Manually update definitions",1,8,11,180,200,25,ManualUpdate,_ManualUpdate_,False
+pWebLabel1="Spybot Website",1,10,221,11,200,18,http://www.safer-networking.org/
+pTextFile1=Spybot_Setup.txt,1,6,221,36,325,270
+
+[ManualUpdate]
+ShellExecute,Open,%ScriptDir%\%ProgramFolder%\SDUpdate.exe,,%ScriptDir%\%ProgramFolder%
+
+[AutoUpdate]
+ShellExecute,Open,%ScriptDir%\%ProgramFolder%\SDUpdate.exe,"/autoupdate /taskbarhide",%ScriptDir%\%ProgramFolder%
+
+[InterfaceEncoded]
+SpyBot_Setup.txt=333,444
+
+[EncodedFile-InterfaceEncoded-SpyBot_Setup.txt]
+lines=0
+0=eJxljz1PxDAMhudW6n+wbmE7CTEgmDvAgITUY0EsucbXWjgfxAnH8etxmxsqoSzW++T1kxwCFEHIMwnImChmuIQCrkiGGGJhkxEM7IZ4OYa8g1NgiwnOpA3ftZvejWwhmAyMRrfkGRfA4Ux+ghMxChhvu7be1lYKThUcRsNQPUBesmGVU/CPXdu1H31xjlCapnEoYiaU/W9CUfKEHDUe+mXAtLfMmj77kYtdC0P/Ysjv8Qc1f+Uy6fY1HuaE9pq/RatfrXmdKzD2e5xx/FzWKlufN/RXFkPKUkkjX0wZ76r+yOStM6u0aQ4hsFTQI79TvL1/qK2t6f/5A4GPhJ94nBMILqh0yi+JD04tKS3QK6koYRgFIwnMZYTQ/3DIczs1CTIwAQDXVwjumDSkIQEAAAACAAAAKwAAAP4AAAAAAAAAAQAAAAAAAAAAAAAA
+

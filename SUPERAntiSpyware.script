@@ -1,0 +1,153 @@
+[Main]
+Title=SUPERAntiSpyware
+Type=script
+Selected=True
+Level=5
+Author=Raetha
+Credits=http://www.superantispyware.com/
+Description=(Tested with v4.34.0.1000) SUPERAntiSpyware - Popular freeware anti-malware utility.
+Download_Level=2
+Version=2
+NoWarning=False
+Date=15 Apr 2010
+
+[Variables]
+%ProgramFolder%=SUPERAntiSpyware
+%ProgramEXE%=SUPERAntiSpyware.exe
+%ProgramTitle%=SUPERAntiSpyware
+
+[Process]
+Echo,"Processing %ProgramTitle%..."
+RunFromRam,%pCheckBox1%
+DirCopy,"%ScriptDir%\%ProgramFolder%\*.*","%target_prog%\%ProgramFolder%"
+If,%pCheckBox2%,Equal,True,Add_Shortcut,Desktop
+If,%pCheckBox3%,Equal,True,Add_Shortcut,QuickLaunch
+If,%pCheckBox4%,Equal,True,Add_Shortcut,StartMenu,%pTextBox1%
+Run,%ScriptFile%,Software.AddReg
+Run,%ScriptFile%,Default.AddReg
+
+[Interface]
+pCheckBox1="Run from RAM (boot.wim or RAMdisk)",1,3,10,11,200,18,False
+pCheckBox2="Add Desktop shortcut(s)",1,3,11,41,200,18,True
+pCheckBox3="Add Quick Launch shortcut(s)",1,3,11,64,200,18,False
+pCheckBox4="Add Start Menu shortcut(s)",1,3,11,87,200,18,True
+pTextBox1="Start Menu folder:",1,0,11,126,200,18,
+pBevel1=pBevel1,1,12,6,36,210,115
+
+[Software.AddReg]
+Echo,"Loading registry hive: [software]"
+Hive_Load,HKU
+Echo,"Writing new values on registry hive.."
+reg_add,0x1,"%reg%\SUPERAntiSpyware.com\SUPERAntiSpyware","SetupWizardComplete","yes"
+reg_add,0x2,"%reg%\SUPERAntiSpyware.com\SUPERAntiSpyware","ApplicationPath","%PE_Programs%\%ProgramFolder%"
+reg_add,0x1,"%reg%\SUPERAntiSpyware.com\SUPERAntiSpyware","ApplicationGUID","{8BED00F7-9BC4-4D7E-94EF-A9CC7544DCA5}"
+reg_add,0x4,"%reg%\SUPERAntiSpyware.com\SUPERAntiSpyware","Registration","0"
+reg_add,0x3,"%reg%\SUPERAntiSpyware.com\SUPERAntiSpyware","Activation","00","00","00","00","00","00","00","00","00","00","00","00","00","00","00","00","00"
+reg_add,0x3,"%reg%\SUPERAntiSpyware.com\SUPERAntiSpyware","SubscriptionExpiration","00","00","00","00","00","00","00","00","00","00","00","00","00","00","00","00"
+reg_add,0x1,"%reg%\SUPERAntiSpyware.com\SUPERAntiSpyware","LastUpdateVersion","4, 34, 0, 1000"
+reg_add,0x1,"%reg%\SUPERAntiSpyware.com\SUPERAntiSpyware","ComponentsVerified","no"
+reg_add,0x1,"%reg%\SUPERAntiSpyware.com\SUPERAntiSpyware","TIRetrieved","no"
+reg_add,0x4,"%reg%\SUPERAntiSpyware.com\SUPERAntiSpyware","TIResellerId","0"
+reg_add,0x1,"%reg%\SUPERAntiSpyware.com\SUPERAntiSpyware","TIReferrer",""
+reg_add,0x1,"%reg%\SUPERAntiSpyware.com\SUPERAntiSpyware","TITag",""
+reg_add,0x1,"%reg%\SUPERAntiSpyware.com\SUPERAntiSpyware","TIExtra",""
+reg_add,0x1,"%reg%\SUPERAntiSpyware.com\SUPERAntiSpyware","TIComplete",""
+reg_add,0x1,"%reg%\SUPERAntiSpyware.com\SUPERAntiSpyware","ESellerate","no"
+reg_add,0x3,"%reg%\SUPERAntiSpyware.com\SUPERAntiSpyware","InstallationTime","da","07","03","00","01","00","01","00","15","00","2d","00","1d","00","d4","01"
+reg_add,0x1,"%reg%\SUPERAntiSpyware.com\SUPERAntiSpyware","RenewalDialogShown","no"
+reg_add,0x1,"%reg%\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanFirstChancePreventionEnabled","no"
+reg_add,0x1,"%reg%\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanFirstChancePreventionScanOnStartup","no"
+reg_add,0x1,"%reg%\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanFirstChancePreventionScanOnShutdown","no"
+reg_add,0x1,"%reg%\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanFirstChancePreventionScanServices","no"
+reg_add,0x4,"%reg%\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanFaultCount","0"
+reg_add,0x1,"%reg%\SUPERAntiSpyware.com\SUPERAntiSpyware","AccountsMigrated","yes"
+reg_add,0x2,"%reg%\SUPERAntiSpyware.com\SUPERAntiSpyware","AppDataPath","%SystemDrive%\Documents and Settings\Default User\Application Data\SUPERAntiSpyware.com\SUPERAntiSpyware"
+Hive_Unload,HKU
+
+[Default.AddReg]
+Echo,"Loading registry hive: [default]"
+Hive_Load,HKCU
+Echo,"Writing new values on registry hive.."
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","MachineID",""
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","UseXPStyleMenus","yes"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ShowSplashScreen","yes"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanRequired","no"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","NotifyHomePageChanged","no"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","NotifySpywareBlocked","yes"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","EnableRealTimeProtection","no"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","CheckForUpdates","no"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","CheckForUpdatesOnStartup","no"
+reg_add,0x4,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","CheckForUpdatesInterval","8"
+reg_add,0x3,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","LastUpdateCheckTime","da","07","03","00","01","00","01","00","10","00","2d","00","28","00","48","01"
+reg_add,0x2,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","NotifyAdBlockSoundPath","%PE_Programs%\%ProgramFolder%\detect.wav"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","NotifyPlaySound","no"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","EventLoggingActive","no"
+reg_add,0x4,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","EventLoggingFlags","0"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","UseSystemHook","yes"
+reg_add,0x3,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","OptionalDisplayItems","01","00","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01","01"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ProtectHomePage","no"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ProtectHomePageAsked","yes"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ProtectedHomePage",""
+reg_add,0x4,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","VersionProcessList","4379"
+reg_add,0x4,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","VersionProcessListRelated","0"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","UNCUpdateServerPath",""
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","LimitedAccess","no"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","SilentUpdates","no"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","EnableHotKeys","yes"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","GetCommandLineFromProcess","yes"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","TerminationProtection","yes"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","TerminationProtectionAllowedTrusted","yes"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","IntegrateWithSecurityCenter","yes"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","UpgradeToProfessionalCompleted","no"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","Language","English (US)"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanScheduleEnabled","no"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanScheduleRebootIfRequired","no"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanScheduleShutdownAfterScan","no"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanScheduleAutomaticallyRemoveItems","no"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanScheduleHideUserInterface","no"
+reg_add,0x4,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanScheduleScanType","0"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanPromptedFirstTime","yes"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanSkipLargeFiles","no"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanCleanCookies","yes"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanShowRemovalWarning","yes"
+reg_add,0x4,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanScheduleFrequency","7"
+reg_add,0x3,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanScheduleTime","00","00","00","00","00","00","00","00","00","00","00","00","00","00","00","00"
+reg_add,0x3,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanScheduleLastTime","da","07","03","00","01","00","01","00","11","00","01","00","05","00","7d","00"
+reg_add,0x3,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanScheduleLastScanTime","00","00","00","00","00","00","00","00","00","00","00","00","00","00","00","00"
+reg_add,0x3,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanLastDefinitionUpdateTime","00","00","00","00","00","00","00","00","00","00","00","00","00","00","00","00"
+reg_add,0x3,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanLastDefinitionCheckTime","00","00","00","00","00","00","00","00","00","00","00","00","00","00","00","00"
+reg_add,0x3,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanLastDefinitionRemindTime","da","07","03","00","01","00","01","00","10","00","2d","00","31","00","19","01"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanRemindCheckForDefinitionUpdates","no"
+reg_add,0x4,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanRemindCheckForDefinitionUpdatesDays","5"
+reg_add,0x4,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanType","0"
+reg_add,0x4,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanMinFileSize","4194304"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanOnlyKnownFileTypes","yes"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanSkipInternetCache","yes"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanLimitRecursionDepth","no"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanIgnoreNonExecutableFiles","no"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanIgnoreSystemRestore","no"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanShowIconInSystemTray","yes"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanKeepLogs","yes"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanKeepCleanLogs","yes"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanLogRealTimeBlockedItems","yes"
+reg_add,0x4,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanSelectedDrives","0"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanCustomMemory","yes"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanCustomRegistry","yes"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanCustomStartup","yes"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanCustomFolders","yes"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanCustomCookies","yes"
+reg_add,0x4,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanAutoScanType","3"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanAutoScanCheckForUpdates","no"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanScheduleCheckForUpdates","yes"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanCloseBrowsers","no"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanResolveLinks","yes"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanTerminateMemoryThreats","yes"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanDonationAsked","no"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanUseKernelFileDirect","yes"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanUseKernelRegistryDirect","yes"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanUseDirectDiskAccess","yes"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanADS","yes"
+reg_add,0x1,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware","ScanDisplayContextMenu","no"
+reg_add,0x0,"%reg%\Software\SUPERAntiSpyware.com\SUPERAntiSpyware\CLSIDRestoreList"
+Hive_Unload,HKCU
+

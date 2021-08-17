@@ -1,0 +1,178 @@
+[Main]
+Title=2X Virtual Computing Client
+Type=script
+Selected=True
+Level=5
+Author=Raetha
+Credits=http://www.2x.com/
+Description=(Tested with v7.3.768) 2X Virtual Computing Client - Application to interact with 2X hosted applications.#$X#$XScript does not include program files due to potential licensing conflicts.
+Download_Level=2
+Version=2
+NoWarning=False
+Date=15 Apr 2010
+
+[Variables]
+%ProgramFolder%=2X Client
+%ProgramEXE%=APPServerClient.exe
+%ProgramTitle%=2X Client
+
+[Process]
+Echo,"Processing %ProgramTitle%..."
+RunFromRam,%pCheckBox1%
+DirCopy,"%ScriptDir%\%ProgramFolder%\*.*","%target_prog%\%ProgramFolder%"
+Run,%ScriptFile%,Software.AddReg
+If,%pCheckBox2%,Equal,True,Add_Shortcut,Desktop
+If,%pCheckBox3%,Equal,True,Add_Shortcut,QuickLaunch
+If,%pCheckBox4%,Equal,True,Add_Shortcut,StartMenu,%pTextBox1%
+
+[Interface]
+pCheckBox1="Run from RAM (boot.wim or RAMdisk)",1,3,10,11,200,18,False
+pCheckBox2="Add Desktop shortcut(s)",1,3,11,41,200,18,True
+pCheckBox3="Add Quick Launch shortcut(s)",1,3,11,64,200,18,False
+pCheckBox4="Add Start Menu shortcut(s)",1,3,11,87,200,18,True
+pTextBox1="Start Menu folder:",1,0,11,126,200,18,
+pBevel1=pBevel1,1,12,6,36,210,115
+pTextLabel1="Connection Info:",1,1,11,155,200,18,8,Normal
+pTextBox2="Domain Name:",1,0,11,195,200,18,WORKGROUP
+pTextBox3="Server:",1,0,11,235,200,18,server.yourdomain.com
+pTextBox4="Port:",1,0,11,275,200,18,443
+pBevel2=pBevel2,1,12,6,175,210,126
+pWebLabel1="2X Website",1,10,221,11,200,18,http://www.2x.com/
+pTextFile1=2X_Client_Setup.txt,1,6,221,36,325,270
+
+[Software.AddReg]
+Echo,"Loading registry hive: [software]"
+Hive_Load,HKU
+Echo,"Writing new values on registry hive.."
+reg_add,0x1,"%reg%\2X\AppServerClient","Domain","%pTextBox2%"
+reg_add,0x1,"%reg%\2X\AppServerClient","Server","%pTextBox3%"
+reg_add,0x4,"%reg%\2X\AppServerClient","ServerPort","%pTextBox4%"
+reg_add,0x4,"%reg%\2X\AppServerClient","SavePassword","0"
+reg_add,0x4,"%reg%\2X\AppServerClient","Mode","2"
+reg_add,0x1,"%reg%\Classes\CLSID\{4EDCB26C-D24C-4e72-AF07-B576699AC0DE}","","Microsoft RDP Client Control (redist)"
+reg_add,0x0,"%reg%\Classes\CLSID\{4EDCB26C-D24C-4e72-AF07-B576699AC0DE}\Control"
+reg_add,0x2,"%reg%\Classes\CLSID\{4EDCB26C-D24C-4e72-AF07-B576699AC0DE}\InprocServer32","","%PE_Programs%\%ProgramFolder%\MsRdp.ocx"
+reg_add,0x1,"%reg%\Classes\CLSID\{4EDCB26C-D24C-4e72-AF07-B576699AC0DE}\InprocServer32","ThreadingModel","Apartment"
+reg_add,0x1,"%reg%\Classes\CLSID\{4EDCB26C-D24C-4e72-AF07-B576699AC0DE}\MiscStatus","","0"
+reg_add,0x1,"%reg%\Classes\CLSID\{4EDCB26C-D24C-4e72-AF07-B576699AC0DE}\MiscStatus\1","","131473"
+reg_add,0x1,"%reg%\Classes\CLSID\{4EDCB26C-D24C-4e72-AF07-B576699AC0DE}\ProgID","","MsRDP.MsRDP.4"
+reg_add,0x0,"%reg%\Classes\CLSID\{4EDCB26C-D24C-4e72-AF07-B576699AC0DE}\Programmable"
+reg_add,0x2,"%reg%\Classes\CLSID\{4EDCB26C-D24C-4e72-AF07-B576699AC0DE}\ToolboxBitmap32","","%PE_Programs%\%ProgramFolder%\MsRdp.ocx, 1"
+reg_add,0x1,"%reg%\Classes\CLSID\{4EDCB26C-D24C-4e72-AF07-B576699AC0DE}\TypeLib","","{af586aae-b62a-420e-b796-294e7ee64c70}"
+reg_add,0x1,"%reg%\Classes\CLSID\{4EDCB26C-D24C-4e72-AF07-B576699AC0DE}\Version","","1.0"
+reg_add,0x1,"%reg%\Classes\CLSID\{4EDCB26C-D24C-4e72-AF07-B576699AC0DE}\VersionIndependentProgID","","MsRDP.MsRDP"
+reg_add,0x1,"%reg%\Classes\CLSID\{7584c670-2274-4efb-b00b-d6aaba6d3850}","","Microsoft RDP Client Control (redist)"
+reg_add,0x0,"%reg%\Classes\CLSID\{7584c670-2274-4efb-b00b-d6aaba6d3850}\Control"
+reg_add,0x2,"%reg%\Classes\CLSID\{7584c670-2274-4efb-b00b-d6aaba6d3850}\InprocServer32","","%PE_Programs%\%ProgramFolder%\MsRdp.ocx"
+reg_add,0x1,"%reg%\Classes\CLSID\{7584c670-2274-4efb-b00b-d6aaba6d3850}\InprocServer32","ThreadingModel","Apartment"
+reg_add,0x1,"%reg%\Classes\CLSID\{7584c670-2274-4efb-b00b-d6aaba6d3850}\MiscStatus","","0"
+reg_add,0x1,"%reg%\Classes\CLSID\{7584c670-2274-4efb-b00b-d6aaba6d3850}\MiscStatus\1","","131473"
+reg_add,0x1,"%reg%\Classes\CLSID\{7584c670-2274-4efb-b00b-d6aaba6d3850}\ProgID","","MsRDP.MsRDP.3"
+reg_add,0x0,"%reg%\Classes\CLSID\{7584c670-2274-4efb-b00b-d6aaba6d3850}\Programmable"
+reg_add,0x2,"%reg%\Classes\CLSID\{7584c670-2274-4efb-b00b-d6aaba6d3850}\ToolboxBitmap32","","%PE_Programs%\%ProgramFolder%\MsRdp.ocx, 1"
+reg_add,0x1,"%reg%\Classes\CLSID\{7584c670-2274-4efb-b00b-d6aaba6d3850}\TypeLib","","{af586aae-b62a-420e-b796-294e7ee64c70}"
+reg_add,0x1,"%reg%\Classes\CLSID\{7584c670-2274-4efb-b00b-d6aaba6d3850}\Version","","1.0"
+reg_add,0x1,"%reg%\Classes\CLSID\{7584c670-2274-4efb-b00b-d6aaba6d3850}\VersionIndependentProgID","","MsRDP.MsRDP"
+reg_add,0x1,"%reg%\Classes\CLSID\{9059f30f-4eb1-4bd2-9fdc-36f43a218f4a}","","Microsoft RDP Client Control (redist)"
+reg_add,0x0,"%reg%\Classes\CLSID\{9059f30f-4eb1-4bd2-9fdc-36f43a218f4a}\Control"
+reg_add,0x2,"%reg%\Classes\CLSID\{9059f30f-4eb1-4bd2-9fdc-36f43a218f4a}\InprocServer32","","%PE_Programs%\%ProgramFolder%\MsRdp.ocx"
+reg_add,0x1,"%reg%\Classes\CLSID\{9059f30f-4eb1-4bd2-9fdc-36f43a218f4a}\InprocServer32","ThreadingModel","Apartment"
+reg_add,0x1,"%reg%\Classes\CLSID\{9059f30f-4eb1-4bd2-9fdc-36f43a218f4a}\MiscStatus","","0"
+reg_add,0x1,"%reg%\Classes\CLSID\{9059f30f-4eb1-4bd2-9fdc-36f43a218f4a}\MiscStatus\1","","131473"
+reg_add,0x1,"%reg%\Classes\CLSID\{9059f30f-4eb1-4bd2-9fdc-36f43a218f4a}\ProgID","","MsRDP.MsRDP.2"
+reg_add,0x0,"%reg%\Classes\CLSID\{9059f30f-4eb1-4bd2-9fdc-36f43a218f4a}\Programmable"
+reg_add,0x2,"%reg%\Classes\CLSID\{9059f30f-4eb1-4bd2-9fdc-36f43a218f4a}\ToolboxBitmap32","","%PE_Programs%\%ProgramFolder%\MsRdp.ocx, 1"
+reg_add,0x1,"%reg%\Classes\CLSID\{9059f30f-4eb1-4bd2-9fdc-36f43a218f4a}\TypeLib","","{af586aae-b62a-420e-b796-294e7ee64c70}"
+reg_add,0x1,"%reg%\Classes\CLSID\{9059f30f-4eb1-4bd2-9fdc-36f43a218f4a}\Version","","1.0"
+reg_add,0x1,"%reg%\Classes\CLSID\{9059f30f-4eb1-4bd2-9fdc-36f43a218f4a}\VersionIndependentProgID","","MsRDP.MsRDP"
+reg_add,0x1,"%reg%\Classes\Interface\{095E0738-D97D-488B-B9F6-DD0E8D66C0DE}","","IMsRdpClient4"
+reg_add,0x1,"%reg%\Classes\Interface\{095E0738-D97D-488B-B9F6-DD0E8D66C0DE}\ProxyStubClsid","","{00020424-0000-0000-C000-000000000046}"
+reg_add,0x1,"%reg%\Classes\Interface\{095E0738-D97D-488B-B9F6-DD0E8D66C0DE}\ProxyStubClsid32","","{00020424-0000-0000-C000-000000000046}"
+reg_add,0x1,"%reg%\Classes\Interface\{095E0738-D97D-488B-B9F6-DD0E8D66C0DE}\TypeLib","","{AF586AAE-B62A-420E-B796-294E7EE64C70}"
+reg_add,0x1,"%reg%\Classes\Interface\{095E0738-D97D-488B-B9F6-DD0E8D66C0DE}\TypeLib","Version","1.0"
+reg_add,0x1,"%reg%\Classes\Interface\{19CD856B-C542-4C53-ACEE-F127E3BE1A59}","","IMsRdpClientAdvancedSettings3"
+reg_add,0x1,"%reg%\Classes\Interface\{19CD856B-C542-4C53-ACEE-F127E3BE1A59}\ProxyStubClsid","","{00020424-0000-0000-C000-000000000046}"
+reg_add,0x1,"%reg%\Classes\Interface\{19CD856B-C542-4C53-ACEE-F127E3BE1A59}\ProxyStubClsid32","","{00020424-0000-0000-C000-000000000046}"
+reg_add,0x1,"%reg%\Classes\Interface\{19CD856B-C542-4C53-ACEE-F127E3BE1A59}\TypeLib","","{AF586AAE-B62A-420E-B796-294E7EE64C70}"
+reg_add,0x1,"%reg%\Classes\Interface\{19CD856B-C542-4C53-ACEE-F127E3BE1A59}\TypeLib","Version","1.0"
+reg_add,0x1,"%reg%\Classes\Interface\{209D0EB9-6254-47B1-9033-A98DAE55BB27}","","IMsTscDebug"
+reg_add,0x1,"%reg%\Classes\Interface\{209D0EB9-6254-47B1-9033-A98DAE55BB27}\ProxyStubClsid","","{00020424-0000-0000-C000-000000000046}"
+reg_add,0x1,"%reg%\Classes\Interface\{209D0EB9-6254-47B1-9033-A98DAE55BB27}\ProxyStubClsid32","","{00020424-0000-0000-C000-000000000046}"
+reg_add,0x1,"%reg%\Classes\Interface\{209D0EB9-6254-47B1-9033-A98DAE55BB27}\TypeLib","","{AF586AAE-B62A-420E-B796-294E7EE64C70}"
+reg_add,0x1,"%reg%\Classes\Interface\{209D0EB9-6254-47B1-9033-A98DAE55BB27}\TypeLib","Version","1.0"
+reg_add,0x1,"%reg%\Classes\Interface\{327BB5CD-834E-4400-AEF2-B30E15E5D682}","","IMsTscAx"
+reg_add,0x1,"%reg%\Classes\Interface\{327BB5CD-834E-4400-AEF2-B30E15E5D682}\ProxyStubClsid","","{00020424-0000-0000-C000-000000000046}"
+reg_add,0x1,"%reg%\Classes\Interface\{327BB5CD-834E-4400-AEF2-B30E15E5D682}\ProxyStubClsid32","","{00020424-0000-0000-C000-000000000046}"
+reg_add,0x1,"%reg%\Classes\Interface\{327BB5CD-834E-4400-AEF2-B30E15E5D682}\TypeLib","","{AF586AAE-B62A-420E-B796-294E7EE64C70}"
+reg_add,0x1,"%reg%\Classes\Interface\{327BB5CD-834E-4400-AEF2-B30E15E5D682}\TypeLib","Version","1.0"
+reg_add,0x1,"%reg%\Classes\Interface\{336D5562-EFA8-482E-8CB3-C5C0FC7A7DB6}","","IMsTscAxEvents"
+reg_add,0x1,"%reg%\Classes\Interface\{336D5562-EFA8-482E-8CB3-C5C0FC7A7DB6}\ProxyStubClsid","","{00020420-0000-0000-C000-000000000046}"
+reg_add,0x1,"%reg%\Classes\Interface\{336D5562-EFA8-482E-8CB3-C5C0FC7A7DB6}\ProxyStubClsid32","","{00020420-0000-0000-C000-000000000046}"
+reg_add,0x1,"%reg%\Classes\Interface\{336D5562-EFA8-482E-8CB3-C5C0FC7A7DB6}\TypeLib","","{AF586AAE-B62A-420E-B796-294E7EE64C70}"
+reg_add,0x1,"%reg%\Classes\Interface\{336D5562-EFA8-482E-8CB3-C5C0FC7A7DB6}\TypeLib","Version","1.0"
+reg_add,0x1,"%reg%\Classes\Interface\{3C65B4AB-12B3-465B-ACD4-B8DAD3BFF9E2}","","IMsRdpClientAdvancedSettings"
+reg_add,0x1,"%reg%\Classes\Interface\{3C65B4AB-12B3-465B-ACD4-B8DAD3BFF9E2}\ProxyStubClsid","","{00020424-0000-0000-C000-000000000046}"
+reg_add,0x1,"%reg%\Classes\Interface\{3C65B4AB-12B3-465B-ACD4-B8DAD3BFF9E2}\ProxyStubClsid32","","{00020424-0000-0000-C000-000000000046}"
+reg_add,0x1,"%reg%\Classes\Interface\{3C65B4AB-12B3-465B-ACD4-B8DAD3BFF9E2}\TypeLib","","{AF586AAE-B62A-420E-B796-294E7EE64C70}"
+reg_add,0x1,"%reg%\Classes\Interface\{3C65B4AB-12B3-465B-ACD4-B8DAD3BFF9E2}\TypeLib","Version","1.0"
+reg_add,0x1,"%reg%\Classes\Interface\{605BEFCF-39C1-45CC-A811-068FB7BE346D}","","IMsRdpClientSecuredSettings"
+reg_add,0x1,"%reg%\Classes\Interface\{605BEFCF-39C1-45CC-A811-068FB7BE346D}\ProxyStubClsid","","{00020424-0000-0000-C000-000000000046}"
+reg_add,0x1,"%reg%\Classes\Interface\{605BEFCF-39C1-45CC-A811-068FB7BE346D}\ProxyStubClsid32","","{00020424-0000-0000-C000-000000000046}"
+reg_add,0x1,"%reg%\Classes\Interface\{605BEFCF-39C1-45CC-A811-068FB7BE346D}\TypeLib","","{AF586AAE-B62A-420E-B796-294E7EE64C70}"
+reg_add,0x1,"%reg%\Classes\Interface\{605BEFCF-39C1-45CC-A811-068FB7BE346D}\TypeLib","Version","1.0"
+reg_add,0x1,"%reg%\Classes\Interface\{809945CC-4B3B-4A92-A6B0-DBF9B5F2EF2D}","","IMsTscAdvancedSettings"
+reg_add,0x1,"%reg%\Classes\Interface\{809945CC-4B3B-4A92-A6B0-DBF9B5F2EF2D}\ProxyStubClsid","","{00020424-0000-0000-C000-000000000046}"
+reg_add,0x1,"%reg%\Classes\Interface\{809945CC-4B3B-4A92-A6B0-DBF9B5F2EF2D}\ProxyStubClsid32","","{00020424-0000-0000-C000-000000000046}"
+reg_add,0x1,"%reg%\Classes\Interface\{809945CC-4B3B-4A92-A6B0-DBF9B5F2EF2D}\TypeLib","","{AF586AAE-B62A-420E-B796-294E7EE64C70}"
+reg_add,0x1,"%reg%\Classes\Interface\{809945CC-4B3B-4A92-A6B0-DBF9B5F2EF2D}\TypeLib","Version","1.0"
+reg_add,0x1,"%reg%\Classes\Interface\{91B7CBC5-A72E-4FA0-9300-D647D7E897FF}","","IMsRdpClient3"
+reg_add,0x1,"%reg%\Classes\Interface\{91B7CBC5-A72E-4FA0-9300-D647D7E897FF}\ProxyStubClsid","","{00020424-0000-0000-C000-000000000046}"
+reg_add,0x1,"%reg%\Classes\Interface\{91B7CBC5-A72E-4FA0-9300-D647D7E897FF}\ProxyStubClsid32","","{00020424-0000-0000-C000-000000000046}"
+reg_add,0x1,"%reg%\Classes\Interface\{91B7CBC5-A72E-4FA0-9300-D647D7E897FF}\TypeLib","","{AF586AAE-B62A-420E-B796-294E7EE64C70}"
+reg_add,0x1,"%reg%\Classes\Interface\{91B7CBC5-A72E-4FA0-9300-D647D7E897FF}\TypeLib","Version","1.0"
+reg_add,0x1,"%reg%\Classes\Interface\{92B4A539-7115-4B7C-A5A9-E5D9EFC2780A}","","IMsRdpClient"
+reg_add,0x1,"%reg%\Classes\Interface\{92B4A539-7115-4B7C-A5A9-E5D9EFC2780A}\ProxyStubClsid","","{00020424-0000-0000-C000-000000000046}"
+reg_add,0x1,"%reg%\Classes\Interface\{92B4A539-7115-4B7C-A5A9-E5D9EFC2780A}\ProxyStubClsid32","","{00020424-0000-0000-C000-000000000046}"
+reg_add,0x1,"%reg%\Classes\Interface\{92B4A539-7115-4B7C-A5A9-E5D9EFC2780A}\TypeLib","","{AF586AAE-B62A-420E-B796-294E7EE64C70}"
+reg_add,0x1,"%reg%\Classes\Interface\{92B4A539-7115-4B7C-A5A9-E5D9EFC2780A}\TypeLib","Version","1.0"
+reg_add,0x1,"%reg%\Classes\Interface\{9AC42117-2B76-4320-AA44-0E616AB8437B}","","IMsRdpClientAdvancedSettings2"
+reg_add,0x1,"%reg%\Classes\Interface\{9AC42117-2B76-4320-AA44-0E616AB8437B}\ProxyStubClsid","","{00020424-0000-0000-C000-000000000046}"
+reg_add,0x1,"%reg%\Classes\Interface\{9AC42117-2B76-4320-AA44-0E616AB8437B}\ProxyStubClsid32","","{00020424-0000-0000-C000-000000000046}"
+reg_add,0x1,"%reg%\Classes\Interface\{9AC42117-2B76-4320-AA44-0E616AB8437B}\TypeLib","","{AF586AAE-B62A-420E-B796-294E7EE64C70}"
+reg_add,0x1,"%reg%\Classes\Interface\{9AC42117-2B76-4320-AA44-0E616AB8437B}\TypeLib","Version","1.0"
+reg_add,0x1,"%reg%\Classes\Interface\{C9D65442-A0F9-45B2-8F73-D61D2DB8CBB6}","","IMsTscSecuredSettings"
+reg_add,0x1,"%reg%\Classes\Interface\{C9D65442-A0F9-45B2-8F73-D61D2DB8CBB6}\ProxyStubClsid","","{00020424-0000-0000-C000-000000000046}"
+reg_add,0x1,"%reg%\Classes\Interface\{C9D65442-A0F9-45B2-8F73-D61D2DB8CBB6}\ProxyStubClsid32","","{00020424-0000-0000-C000-000000000046}"
+reg_add,0x1,"%reg%\Classes\Interface\{C9D65442-A0F9-45B2-8F73-D61D2DB8CBB6}\TypeLib","","{AF586AAE-B62A-420E-B796-294E7EE64C70}"
+reg_add,0x1,"%reg%\Classes\Interface\{C9D65442-A0F9-45B2-8F73-D61D2DB8CBB6}\TypeLib","Version","1.0"
+reg_add,0x1,"%reg%\Classes\Interface\{E7E17DC4-3B71-4BA7-A8E6-281FFADCA28F}","","IMsRdpClient2"
+reg_add,0x1,"%reg%\Classes\Interface\{E7E17DC4-3B71-4BA7-A8E6-281FFADCA28F}\ProxyStubClsid","","{00020424-0000-0000-C000-000000000046}"
+reg_add,0x1,"%reg%\Classes\Interface\{E7E17DC4-3B71-4BA7-A8E6-281FFADCA28F}\ProxyStubClsid32","","{00020424-0000-0000-C000-000000000046}"
+reg_add,0x1,"%reg%\Classes\Interface\{E7E17DC4-3B71-4BA7-A8E6-281FFADCA28F}\TypeLib","","{AF586AAE-B62A-420E-B796-294E7EE64C70}"
+reg_add,0x1,"%reg%\Classes\Interface\{E7E17DC4-3B71-4BA7-A8E6-281FFADCA28F}\TypeLib","Version","1.0"
+reg_add,0x1,"%reg%\Classes\Interface\{FBA7F64E-7345-4405-AE50-FA4A763DC0DE}","","IMsRdpClientAdvancedSettings4"
+reg_add,0x1,"%reg%\Classes\Interface\{FBA7F64E-7345-4405-AE50-FA4A763DC0DE}\ProxyStubClsid","","{00020424-0000-0000-C000-000000000046}"
+reg_add,0x1,"%reg%\Classes\Interface\{FBA7F64E-7345-4405-AE50-FA4A763DC0DE}\ProxyStubClsid32","","{00020424-0000-0000-C000-000000000046}"
+reg_add,0x1,"%reg%\Classes\Interface\{FBA7F64E-7345-4405-AE50-FA4A763DC0DE}\TypeLib","","{AF586AAE-B62A-420E-B796-294E7EE64C70}"
+reg_add,0x1,"%reg%\Classes\Interface\{FBA7F64E-7345-4405-AE50-FA4A763DC0DE}\TypeLib","Version","1.0"
+reg_add,0x1,"%reg%\Classes\TypeLib\{AF586AAE-B62A-420E-B796-294E7EE64C70}\1.0","","Microsoft Terminal Services Control (redist)"
+reg_add,0x2,"%reg%\Classes\TypeLib\{AF586AAE-B62A-420E-B796-294E7EE64C70}\1.0\0\win32","","%PE_Programs%\%ProgramFolder%\MsRdp.ocx"
+reg_add,0x1,"%reg%\Classes\TypeLib\{AF586AAE-B62A-420E-B796-294E7EE64C70}\1.0\FLAGS","","0"
+reg_add,0x2,"%reg%\Classes\TypeLib\{AF586AAE-B62A-420E-B796-294E7EE64C70}\1.0\HELPDIR","","%PE_Programs%\%ProgramFolder%\"
+reg_add,0x1,"%reg%\Classes\MsRDP.MsRDP","","MsRDP Class v4"
+reg_add,0x1,"%reg%\Classes\MsRDP.MsRDP\CurVer","","MsRDP.MsRDP.4"
+reg_add,0x1,"%reg%\Classes\MsRDP.MsRDP.2","","MsRDP Class v3"
+reg_add,0x1,"%reg%\Classes\MsRDP.MsRDP.2\CLSID","","{9059f30f-4eb1-4bd2-9fdc-36f43a218f4a}"
+reg_add,0x1,"%reg%\Classes\MsRDP.MsRDP.3","","MsRDP Class v4"
+reg_add,0x1,"%reg%\Classes\MsRDP.MsRDP.3\CLSID","","{7584c670-2274-4efb-b00b-d6aaba6d3850}"
+reg_add,0x1,"%reg%\Classes\MsRDP.MsRDP.4","","MsRDP Class v5"
+reg_add,0x1,"%reg%\Classes\MsRDP.MsRDP.4\CLSID","","{4EDCB26C-D24C-4e72-AF07-B576699AC0DE}"
+Hive_Unload,HKU
+
+[InterfaceEncoded]
+2X_Client_Setup.txt=218,291
+
+[EncodedFile-InterfaceEncoded-2X_Client_Setup.txt]
+lines=0
+0=eJxNjT0LwkAQRPtA/sOQRghyRUrbgLWFRYprjrjRhb3b4z4I/ntPBEk7M+/NXVEzobw4I6+JY8FbK3zNBVFjFVcIDsO0YBamUAZsKg9K2LlBoe8O6CkfyyYlbCzU0qS+WURXJ/ir+o5DLk7aB2s4gw0ZzBd7S/pMzuP6Ze202N/cjmb8ADVwPMB4nBM2ioh3zslMzSuJD04tKS3QK6koYRgFIwash9KdOOSf32OZyMAEALVpCu42X5ZnAQAAAAIAAAAtAAAAiQAAAAAAAAABAAAAAAAAAAAAAAA
+

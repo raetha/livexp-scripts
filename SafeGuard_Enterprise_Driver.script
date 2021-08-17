@@ -1,0 +1,114 @@
+[Main]
+Title=SafeGuard Enterprise Base Encryption Driver
+Type=script
+Selected=True
+Level=5
+Author=Raetha
+Credits=http://www.sophos.com/products/enterprise/encryption/safeguard-enterprise/
+Description=(Tested with v5.35.3) Driver required to interact with a SafeGuard Enterprise encrypted volume.#$X#$XScript does not include program files due to potential licensing conflicts.
+Download_Level=2
+NoWarning=False
+Version=2
+Date=15 Apr 2010
+
+[Process]
+Run,%ScriptFile%,SourceDisksFiles
+Run,%ScriptFile%,SetupReg.AddReg
+Run,%ScriptFile%,SetValue
+
+[SourceDisksFiles]
+Echo,"Copying files.."
+FileCopy,"%ScriptDir%\SafeGuard Driver\*.*","%target_sys%\Drivers"
+
+[SetupReg.AddReg]
+Echo,"Loading registry hive: [setupreg.hiv]"
+Hive_Load,HKLM
+Echo,"Writing new values on registry hive.."
+reg_add,0x1,"%reg%\ControlSet001\Services\BeFlt","DisplayName","SGN-BE Encryption Engine"
+reg_add,0x4,"%reg%\ControlSet001\Services\BeFlt","ErrorControl","1"
+reg_add,0x4,"%reg%\ControlSet001\Services\BeFlt","Tag","2"
+reg_add,0x1,"%reg%\ControlSet001\Services\BeFlt","Group","Filter"
+reg_add,0x1,"%reg%\ControlSet001\Services\BeFlt","ImagePath","BeFlt.sys"
+reg_add,0x4,"%reg%\ControlSet001\Services\BeFlt","Type","1"
+reg_add,0x4,"%reg%\ControlSet001\Services\BeFlt","Start","3"
+reg_add,0x4,"%reg%\ControlSet001\Services\BeFlt\Parameters","Setup","4"
+reg_add,0x4,"%reg%\ControlSet001\Services\BeFlt\Parameters","Statistics","0"
+reg_add,0x1,"%reg%\ControlSet001\Services\CEAES2M","ImagePath","CEAES2M.SYS"
+reg_add,0x4,"%reg%\ControlSet001\Services\CEAES2M","Type","1"
+reg_add,0x4,"%reg%\ControlSet001\Services\CEAES2M","Start","3"
+reg_add,0x1,"%reg%\ControlSet001\Services\CEAESM","ImagePath","CEAESM.SYS"
+reg_add,0x4,"%reg%\ControlSet001\Services\CEAESM","Type","1"
+reg_add,0x4,"%reg%\ControlSet001\Services\CEAESM","Start","3"
+reg_add,0x1,"%reg%\ControlSet001\Services\CEDES3M","ImagePath","CEDES3M.SYS"
+reg_add,0x4,"%reg%\ControlSet001\Services\CEDES3M","Type","1"
+reg_add,0x4,"%reg%\ControlSet001\Services\CEDES3M","Start","3"
+reg_add,0x1,"%reg%\ControlSet001\Services\CEEIDEM","ImagePath","CEEIDEM.SYS"
+reg_add,0x4,"%reg%\ControlSet001\Services\CEEIDEM","Type","1"
+reg_add,0x4,"%reg%\ControlSet001\Services\CEEIDEM","Start","3"
+reg_add,0x1,"%reg%\ControlSet001\Services\CESHAM","ImagePath","CESHAM.SYS"
+reg_add,0x4,"%reg%\ControlSet001\Services\CESHAM","Type","1"
+reg_add,0x4,"%reg%\ControlSet001\Services\CESHAM","Start","3"
+reg_add,0x1,"%reg%\ControlSet001\Services\SGSTDRVM","ImagePath","SGSTDRVM.SYS"
+reg_add,0x4,"%reg%\ControlSet001\Services\SGSTDRVM","Type","1"
+reg_add,0x4,"%reg%\ControlSet001\Services\SGSTDRVM","Start","3"
+reg_add,0x2,"%reg%\ControlSet001\Services\BE_FLTIM","ImagePath","BE_FLTIM.SYS"
+reg_add,0x4,"%reg%\ControlSet001\Services\BE_FLTIM","Type","1"
+reg_add,0x4,"%reg%\ControlSet001\Services\BE_FLTIM","Start","3"
+reg_add,0x4,"%reg%\ControlSet001\Control\Utimaco\CryptEng\AES","AlgID","14"
+reg_add,0x1,"%reg%\ControlSet001\Control\Utimaco\CryptEng\AES","AlgFriendlyName","AES"
+reg_add,0x1,"%reg%\ControlSet001\Control\Utimaco\CryptEng\AES","DriverName","CEAES"
+reg_add,0x4,"%reg%\ControlSet001\Control\Utimaco\CryptEng\AES256","AlgID","15"
+reg_add,0x1,"%reg%\ControlSet001\Control\Utimaco\CryptEng\AES256","AlgFriendlyName","AES256"
+reg_add,0x1,"%reg%\ControlSet001\Control\Utimaco\CryptEng\AES256","DriverName","CEAES2"
+reg_add,0x4,"%reg%\ControlSet001\Control\Utimaco\CryptEng\DES3","AlgID","10"
+reg_add,0x1,"%reg%\ControlSet001\Control\Utimaco\CryptEng\DES3","AlgFriendlyName","DES3"
+reg_add,0x1,"%reg%\ControlSet001\Control\Utimaco\CryptEng\DES3","DriverName","CEDES3"
+reg_add,0x4,"%reg%\ControlSet001\Control\Utimaco\CryptEng\EIDE","AlgID","23"
+reg_add,0x1,"%reg%\ControlSet001\Control\Utimaco\CryptEng\EIDE","AlgFriendlyName","EIDE"
+reg_add,0x1,"%reg%\ControlSet001\Control\Utimaco\CryptEng\EIDE","DriverName","CEEIDE"
+reg_add,0x4,"%reg%\ControlSet001\Control\Utimaco\CryptEng\SHA","AlgID","20"
+reg_add,0x1,"%reg%\ControlSet001\Control\Utimaco\CryptEng\SHA","AlgFriendlyName","SHA"
+reg_add,0x1,"%reg%\ControlSet001\Control\Utimaco\CryptEng\SHA","DriverName","CESHA"
+reg_add,0x7,"%reg%\ControlSet001\Control\Class\{4D36E967-E325-11CE-BFC1-08002BE10318}","UpperFilters","PartMgr","BeFlt"
+Hive_Unload,HKLM
+
+[SetValue]
+If,NotExistSection,"%target_win%\TXTSETUP.SIF","SourceDisksFiles",IniAddSection,"%target_win%\TXTSETUP.SIF","SourceDisksFiles"
+IniWrite,"%target_win%\TXTSETUP.SIF","SourceDisksFiles","BeFlt.sys","1#$c#$c#$c#$c#$c#$c3_#$c4#$c0#$c0#$c#$c1#$c4"
+IniWrite,"%target_win%\TXTSETUP.SIF","SourceDisksFiles","CEAESM.SYS","1#$c#$c#$c#$c#$c#$c3_#$c4#$c0#$c0#$c#$c1#$c4"
+IniWrite,"%target_win%\TXTSETUP.SIF","SourceDisksFiles","CEAES2M.SYS","1#$c#$c#$c#$c#$c#$c3_#$c4#$c0#$c0#$c#$c1#$c4"
+IniWrite,"%target_win%\TXTSETUP.SIF","SourceDisksFiles","CEDES3M.SYS","1#$c#$c#$c#$c#$c#$c3_#$c4#$c0#$c0#$c#$c1#$c4"
+IniWrite,"%target_win%\TXTSETUP.SIF","SourceDisksFiles","CEEIDEM.SYS","1#$c#$c#$c#$c#$c#$c3_#$c4#$c0#$c0#$c#$c1#$c4"
+IniWrite,"%target_win%\TXTSETUP.SIF","SourceDisksFiles","CESHAM.SYS","1#$c#$c#$c#$c#$c#$c3_#$c4#$c0#$c0#$c#$c1#$c4"
+IniWrite,"%target_win%\TXTSETUP.SIF","SourceDisksFiles","SGSTDRVM.SYS","1#$c#$c#$c#$c#$c#$c3_#$c4#$c0#$c0#$c#$c1#$c4"
+IniWrite,"%target_win%\TXTSETUP.SIF","SourceDisksFiles","BE_FLTIM.SYS","1#$c#$c#$c#$c#$c#$c3_#$c4#$c0#$c0#$c#$c1#$c4"
+If,NotExistSection,"%target_win%\TXTSETUP.SIF","BusExtenders.Load",IniAddSection,"%target_win%\TXTSETUP.SIF","BusExtenders.Load"
+IniWrite,"%target_win%\TXTSETUP.SIF","BusExtenders.Load","BeFlt","BeFlt.sys"
+IniWrite,"%target_win%\TXTSETUP.SIF","BusExtenders.Load","CEAESM","CEAESM.SYS"
+IniWrite,"%target_win%\TXTSETUP.SIF","BusExtenders.Load","CEAES2M","CEAES2M.SYS"
+IniWrite,"%target_win%\TXTSETUP.SIF","BusExtenders.Load","CEDES3M","CEDES3M.SYS"
+IniWrite,"%target_win%\TXTSETUP.SIF","BusExtenders.Load","CEEIDEM","CEEIDEM.SYS"
+IniWrite,"%target_win%\TXTSETUP.SIF","BusExtenders.Load","CESHAM","CESHAM.SYS"
+IniWrite,"%target_win%\TXTSETUP.SIF","BusExtenders.Load","SGSTDRVM","SGSTDRVM.SYS"
+IniWrite,"%target_win%\TXTSETUP.SIF","BusExtenders.Load","BE_FLTIM","BE_FLTIM.SYS"
+If,NotExistSection,"%target_win%\TXTSETUP.SIF","BusExtenders",IniAddSection,"%target_win%\TXTSETUP.SIF","BusExtenders"
+IniWrite,"%target_win%\TXTSETUP.SIF","BusExtenders","BeFlt","#$qSGN-BE Encryption SubSys#$q#$cfiles.none#$cbeflt"
+IniWrite,"%target_win%\TXTSETUP.SIF","BusExtenders","CEAESM","#$qCEAESM#$q#$cfiles.none#$cCEAESM"
+IniWrite,"%target_win%\TXTSETUP.SIF","BusExtenders","CEAES2M","#$qCEAES2M#$q#$cfiles.none#$cCEAES2M"
+IniWrite,"%target_win%\TXTSETUP.SIF","BusExtenders","CEDES3M","#$qCEDES3M#$q#$cfiles.none#$cCEDES3M"
+IniWrite,"%target_win%\TXTSETUP.SIF","BusExtenders","CEEIDEM","#$qCEEIDEM#$q#$cfiles.none#$cCEEIDEM"
+IniWrite,"%target_win%\TXTSETUP.SIF","BusExtenders","CESHAM","#$qCESHAM#$q#$cfiles.none#$cCESHAM"
+IniWrite,"%target_win%\TXTSETUP.SIF","BusExtenders","SGSTDRVM","#$qSGSTDRVM#$q#$cfiles.none#$cSGSTDRVM"
+IniWrite,"%target_win%\TXTSETUP.SIF","BusExtenders","BE_FLTIM","#$qBE_FLTIM#$q#$cfiles.none#$cBE_FLTIM"
+
+[Interface]
+pWebLabel1="SafeGuard Enterprise Website",1,10,1,11,200,18,http://www.sophos.com/products/enterprise/encryption/safeguard-enterprise/
+pTextFile1=SafeGuard_Driver_Setup.txt,1,6,1,36,325,270
+
+[InterfaceEncoded]
+SafeGuard_Driver_Setup.txt=272,363
+
+[EncodedFile-InterfaceEncoded-SafeGuard_Driver_Setup.txt]
+lines=0
+0=eJxNjj0LwjAURfdA/8Oji5uDbm7VxFqwiymCk4Q21QdpUvJh8d+baqnd7uFw73uVgeAk+Cc6cLXF3sPbBOiC89CbPijhJQhIuWhlHoRtgFp8SZtCa1QjbUIGjGW9XFi5ScLoopEjKzOgfkCLSkZvTRdnlamFSsh/nGkvbW8xvoTaeaHifTR6l5CE7Nn9eK6Kcs1vfKQIv3hgGeObcgFzpoxvZ2AFZTPwUzZlnvOKXq5f+gB9hFZAeJyTCk5MS3UvTSxKiXcpyixLLYoPTi0pLdArqShhGAXDH/AzQujtOOQf/txyioEJANAvDnecjT2YAQAAAAIAAAA1AAAAtwAAAAAAAAABAAAAAAAAAAAAAAA
+
