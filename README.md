@@ -3,6 +3,6 @@ A series of scripts I wrote for the WinBuilder LiveXP project which created a Wi
 All scripts are provided as is with no guarantee. Most scripts are for proprietary software and therefore do not have the applications embedded.
 
 Related Links:
-[WinBuilder](http://reboot.pro/index.php?app=downloads&showcat=5)
-[LiveXP Project](http://reboot.pro/index.php?app=downloads&showfile=30)
-[Reboot.pro](http://reboot.pro)
+- [WinBuilder](http://reboot.pro/index.php?app=downloads&showcat=5)
+- [LiveXP Project](http://reboot.pro/index.php?app=downloads&showfile=30)
+- [Reboot.pro](http://reboot.pro)
